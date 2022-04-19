@@ -13,4 +13,10 @@ public class CustomerServlet extends HttpServlet{
         PrintWriter writer = resp.getWriter();
         writer.write("Request rec From CustomerServlet");
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        PrintWriter writer = resp.getWriter();
+        writer.write("Request rec From CustomerServlet POST method");
+    }
 }
