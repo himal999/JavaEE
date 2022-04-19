@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = "/hello")
-public class HelloServlet extends HttpServlet {
+public class MyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
-        writer.write("Response From Hello servlet");
+        writer.write("Request  rec From MyServlet");
     }
 }
