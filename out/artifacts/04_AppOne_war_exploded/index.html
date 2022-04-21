@@ -64,12 +64,16 @@
     })
 
     $("#btnItem").click(function () {
+        $(".tblItem").empty();
         $.ajax({
            url: "item",
            method: "GET",
            dataType: "json" ,
             success:function (resp) {
-                console.log(resp);
+                for(var item of resp){
+                    let row = `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.qty}</td><td>${item.unitPrice}</td></tr>`;
+                    $(".tblItem").append(row);
+                }
             }
         });
     });
