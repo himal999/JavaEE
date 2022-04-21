@@ -32,7 +32,7 @@
 
 
     $("#btnJSON").click(function () {
-
+        $(".tblJSON").empty();
         $.ajax({
             url: "customer",
             method:"GET",
@@ -40,8 +40,7 @@
             success:function (resp) {
                 for(var i =0 ;i<$(resp).length;i++){
 
-
-                    let row = `<tr><td>${$(resp)[i].id}</td><td>${$(resp)[i].name}</td><td>${$(resp)[i].address}</td><td>${$(resp)[i].salary}</td></tr>`;
+                  let row = `<tr><td>${$(resp)[i].id}</td><td>${$(resp)[i].name}</td><td>${$(resp)[i].address}</td><td>${$(resp)[i].salary}</td></tr>`;
                     $(".tblJSON").append(row);
                 }
             }
