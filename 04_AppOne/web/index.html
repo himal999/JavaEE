@@ -8,7 +8,7 @@
 <body>
 
 
-<button id="btnJSON" type="button" class="btn bg-danger">send request JSON</button>
+<button id="btnCustomer" type="button" class="btn bg-danger">Get Customer</button>
 <table class="table">
     <thead>
     <tr>
@@ -18,7 +18,23 @@
         <th scope="col">Handle</th>
     </tr>
     </thead>
-    <tbody class="tblJSON">
+    <tbody class="tblCustomer">
+
+    </tbodY>
+</table>
+
+
+<button id="btnItem" type="button" class="btn bg-danger">Get Item</button>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+    </tr>
+    </thead>
+    <tbody class="tblItem">
 
     </tbodY>
 </table>
@@ -31,8 +47,8 @@
 
 
 
-    $("#btnJSON").click(function () {
-        $(".tblJSON").empty();
+    $("#btnCustomer").click(function () {
+        $(".tblCustomer").empty();
         $.ajax({
             url: "customer",
             method:"GET",
@@ -41,11 +57,22 @@
                 for(var i =0 ;i<$(resp).length;i++){
 
                   let row = `<tr><td>${$(resp)[i].id}</td><td>${$(resp)[i].name}</td><td>${$(resp)[i].address}</td><td>${$(resp)[i].salary}</td></tr>`;
-                    $(".tblJSON").append(row);
+                    $(".tblCustomer").append(row);
                 }
             }
         });
     })
+
+    $("#btnItem").click(function () {
+        $.ajax({
+           url: "item",
+           method: "GET",
+           dataType: "json" ,
+            success:function (resp) {
+                console.log("working")
+            }
+        });
+    });
 </script>
 
 </body>
