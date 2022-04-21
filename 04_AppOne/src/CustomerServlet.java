@@ -25,8 +25,8 @@ public class CustomerServlet extends HttpServlet {
             }
             //meken out put eke enne awsnet , ekth ekka ethokt ek json object ekk wenne nehe e nisa e ',' eka ain krgnna onee.
             //eka ain krnna mn use kre java special charactors   ...thwa allCustomer.subString(0,allCustomer.lenght-1); mekenuth puluwn eka ain krnna
-            String json = "["+allCustomer+"\b"+"]";
-            System.out.println(json);
+            String json = "["+allCustomer.substring(0,allCustomer.length()-1)+"]";
+
             PrintWriter writer = resp.getWriter();
             writer.write(json);
         } catch (ClassNotFoundException | SQLException e) {

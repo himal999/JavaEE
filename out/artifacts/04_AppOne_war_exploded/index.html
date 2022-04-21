@@ -22,7 +22,7 @@
 
     </tbodY>
 </table>
-</head>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script>
@@ -35,9 +35,15 @@
 
         $.ajax({
             url: "customer",
+            method:"GET",
             dataType:"json",
             success:function (resp) {
-                    console.log(resp)
+                for(var i =0 ;i<$(resp).length;i++){
+
+
+                    let row = `<tr><td>${$(resp)[i].id}</td><td>${$(resp)[i].name}</td><td>${$(resp)[i].address}</td><td>${$(resp)[i].salary}</td></tr>`;
+                    $(".tblJSON").append(row);
+                }
             }
         });
     })
