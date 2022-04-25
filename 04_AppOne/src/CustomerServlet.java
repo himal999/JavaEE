@@ -1,3 +1,5 @@
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,5 +36,39 @@ public class CustomerServlet extends HttpServlet {
         }
 
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String customerId = req.getParameter("customerId");
+        String customerName = req.getParameter("customerName");
+        String customerAddress = req.getParameter("customerAddress");
+        String customerSalary = req.getParameter("customerSalary");
+        System.out.println(customerId+" "+customerName+" "+customerAddress+" "+customerSalary);
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaEE","root","");
+            PreparedStatement pst = con.prepareStatement("INSERT  INTO `customer` VALUES(?,?,?,?)");
+            pst.setObject(1,customerId);
+            pst.setObject(2,customerName);
+            pst.setObject(3,customerAddress);
+            pst.setObject(4,customerSalary);
+
+
+
+            PrintWriter writer = resp.getWriter();
+            if(pst.executeUpdate()>0){
+                writer.write("Customer Added Success");
+                return;
+            }else{
+                writer.write("Try Again");
+                return;
+            }
+
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
