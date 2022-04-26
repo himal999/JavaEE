@@ -15,6 +15,8 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+
+            resp.setContentType("application/json");//(methanik resp type ek menstion kroth front end eke kiynn onee nh);
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaEE","root","");
             PreparedStatement pst = con.prepareStatement("SELECT * FROM `customer`");

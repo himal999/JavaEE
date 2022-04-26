@@ -72,7 +72,7 @@
         $.ajax({
             url: "customer",
             method:"GET",
-            dataType:"json",
+         //(backend ekn kiyl thiynwa json enne kiyla)   dataType:"json", //ena resp ek json ekt convert krnna
             success:function (resp) {
                 for(var i =0 ;i<$(resp).length;i++){
 
