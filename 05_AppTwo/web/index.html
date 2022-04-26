@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form action="customer" method="post">
+<form id="customer">
     <div class="mb-3">
         <label  class="form-label">Customer ID</label>
         <input type="text" class="form-control" id="inId" name="customerId">
@@ -56,30 +56,36 @@
 <script>
 
 
+function loadAllCustomer(){
+    $(".tblCustomer").empty();
+    $.ajax({
+        url: "customer",
+        method:"GET",
+        //(backend ekn kiyl thiynwa json enne kiyla)   dataType:"json", //ena resp ek json ekt convert krnna
+        success:function (resp) {
+            for(var i =0 ;i<$(resp).length;i++){
 
+                let row = `<tr><td>${$(resp)[i].id}</td><td>${$(resp)[i].name}</td><td>${$(resp)[i].address}</td><td>${$(resp)[i].salary}</td></tr>`;
+                $(".tblCustomer").append(row);
+            }
+        }
+    });
+}
 
 
     $("#btnCustomer").click(function () {
-        $(".tblCustomer").empty();
-        $.ajax({
-            url: "customer",
-            method:"GET",
-         //(backend ekn kiyl thiynwa json enne kiyla)   dataType:"json", //ena resp ek json ekt convert krnna
-            success:function (resp) {
-                for(var i =0 ;i<$(resp).length;i++){
-
-                  let row = `<tr><td>${$(resp)[i].id}</td><td>${$(resp)[i].name}</td><td>${$(resp)[i].address}</td><td>${$(resp)[i].salary}</td></tr>`;
-                    $(".tblCustomer").append(row);
-                }
-            }
-        });
+        loadAllCustomer();
     })
 
     $("#btnSave").click(function () {
+       var data =  $("#customer").serialize();
         $.ajax({
             url:"customer",
             method: "POST",
-
+            data:data,
+            success:function (resp) {
+               loadAllCustomer();
+            }
         });
     });
 

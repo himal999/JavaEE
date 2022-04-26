@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form action="customer" method="post">
+<form id="customer">
     <div class="mb-3">
         <label  class="form-label">Customer ID</label>
         <input type="text" class="form-control" id="inId" name="customerId">
@@ -25,10 +25,14 @@
         <input type="text" class="form-control" id="inSalary" name="customerSalary">
     </div>
 
-     <button type="submit" class="btn btn-primary">Save</button>
+     <button type="button" class="btn btn-primary" id="btnSave">Save</button>
 </form>
 
-<button id="btnCustomer" type="button" class="btn bg-danger">Get Customer</button>
+
+
+
+<button id="btnCustomer" type="button" class="btn bg-danger mt-5">Get Customer</button>
+
 <table class="table">
     <thead>
     <tr>
@@ -44,59 +48,48 @@
 </table>
 
 
-<button id="btnItem" type="button" class="btn bg-danger">Get Item</button>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-    </tr>
-    </thead>
-    <tbody class="tblItem">
 
-    </tbodY>
-</table>
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script>
 
 
+function loadAllCustomer(){
+    $(".tblCustomer").empty();
+    $.ajax({
+        url: "customer",
+        method:"GET",
+        //(backend ekn kiyl thiynwa json enne kiyla)   dataType:"json", //ena resp ek json ekt convert krnna
+        success:function (resp) {
+            for(var i =0 ;i<$(resp).length;i++){
 
+                let row = `<tr><td>${$(resp)[i].id}</td><td>${$(resp)[i].name}</td><td>${$(resp)[i].address}</td><td>${$(resp)[i].salary}</td></tr>`;
+                $(".tblCustomer").append(row);
+            }
+        }
+    });
+}
 
 
     $("#btnCustomer").click(function () {
-        $(".tblCustomer").empty();
-        $.ajax({
-            url: "customer",
-            method:"GET",
-         //(backend ekn kiyl thiynwa json enne kiyla)   dataType:"json", //ena resp ek json ekt convert krnna
-            success:function (resp) {
-                for(var i =0 ;i<$(resp).length;i++){
-
-                  let row = `<tr><td>${$(resp)[i].id}</td><td>${$(resp)[i].name}</td><td>${$(resp)[i].address}</td><td>${$(resp)[i].salary}</td></tr>`;
-                    $(".tblCustomer").append(row);
-                }
-            }
-        });
+        loadAllCustomer();
     })
 
-    $("#btnItem").click(function () {
-        $(".tblItem").empty();
+    $("#btnSave").click(function () {
+       var data =  $("#customer").serialize();
         $.ajax({
-           url: "item",
-           method: "GET",
-           dataType: "json" ,
+            url:"customer",
+            method: "POST",
+            data:data,
             success:function (resp) {
-                for(var item of resp){
-                    let row = `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.qty}</td><td>${item.unitPrice}</td></tr>`;
-                    $(".tblItem").append(row);
-                }
+               loadAllCustomer();
             }
         });
     });
+
+
 </script>
 
 </body>
