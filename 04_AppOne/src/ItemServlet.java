@@ -4,10 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 public class ItemServlet extends HttpServlet {
@@ -32,5 +29,27 @@ public class ItemServlet extends HttpServlet {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con  = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaEE","root","");
+            PreparedStatement pst = con.prepareStatement("INSERT INTO `item` VALUES (?,?,?,?)");
+            pst.setObject(1,req.getParameter("itemId"));
+            pst.setObject(2,req.getParameter("itemName"));
+            pst.setObject(3,req.getParameter("itemAddress"));
+            pst.setObject(4,req.getParameter("itemSalary"));
+            PrintWriter write = resp.getWriter();
+            if(pst.executeUpdate()>0){
+                write.write("Item Added Success");
+            }else{
+                write.write("Try Again");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
