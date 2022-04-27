@@ -27,12 +27,7 @@
 
      <button type="button" class="btn btn-primary" id="btnSave">Save</button>
 </form>
-
-
-
-
 <button id="btnCustomer" type="button" class="btn bg-danger mt-5">Get Customer</button>
-
 <table class="table">
     <thead>
     <tr>
@@ -48,7 +43,40 @@
 </table>
 
 
+<form id="itemForm">
+    <div class="mb-3">
+        <label  class="form-label">Item ID</label>
+        <input type="text" class="form-control" id="itemId" name="itemId">
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">Item Name</label>
+        <input type="text" class="form-control" id="itemName" name="itemName">
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">Item Qty</label>
+        <input type="text" class="form-control" id="itemAddress" name="itemAddress">
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">Item Price</label>
+        <input type="text" class="form-control" id="itemSalary" name="itemSalary">
+    </div>
 
+    <button type="button" class="btn btn-primary" id="btnItem">Save</button>
+</form>
+<button id="btnItemGet" type="button" class="btn bg-danger">Get Item</button>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+    </tr>
+    </thead>
+    <tbody class="tblItem">
+
+    </tbodY>
+</table>
 
 
 
@@ -89,7 +117,36 @@ function loadAllCustomer(){
         });
     });
 
+$("#btnItem").click(function () {
+    var data = $("#itemForm").serialize();
 
+    $.ajax({
+        url:"item",
+        method:"POST",
+        data:data,
+        success:function () {
+           loadItem();
+        }
+    })
+})
+
+    $("btnItemGet").click(function () {
+           loadItem();
+    });
+function loadItem() {
+    $(".tblItem").empty();
+$.ajax({
+    url:"item",
+    method:"GET",
+    dataType:"json",
+    success:function (resp) {
+        for(const temp of resp){
+            let row = `<tr><td>${temp.id}</td><td>${temp.name}</td><td>${temp.qty}</td><td>${temp.unitPrice}</td></tr>`;
+            $(".tblItem").append(row);
+        }
+    }
+})
+}
 </script>
 
 </body>
