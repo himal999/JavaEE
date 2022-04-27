@@ -28,7 +28,9 @@
      <button type="button" class="btn btn-primary" id="btnSave">Save</button>
 </form>
 <button id="btnCustomer" type="button" class="btn bg-danger mt-5">Get Customer</button>
-<table class="table">
+<button id="btnCustomerDelete" type="button" class="btn btn-danger">Delete Customer</button>
+<button id="btnCustomerUpdate" type="button" class="btn btn-danger">Update Customer</button>
+<table class="table mt-5">
     <thead>
     <tr>
         <th scope="col">#</th>
@@ -96,8 +98,10 @@ function loadAllCustomer(){
                 let row = `<tr><td>${$(resp)[i].id}</td><td>${$(resp)[i].name}</td><td>${$(resp)[i].address}</td><td>${$(resp)[i].salary}</td></tr>`;
                 $(".tblCustomer").append(row);
             }
+            bindMove();
         }
     });
+
 }
 
 
@@ -113,6 +117,7 @@ function loadAllCustomer(){
             data:data,
             success:function (resp) {
                loadAllCustomer();
+
             }
         });
     });
@@ -130,23 +135,64 @@ $("#btnItem").click(function () {
     })
 })
 
-    $("btnItemGet").click(function () {
+    $("#btnItemGet").click(function () {
            loadItem();
     });
 function loadItem() {
     $(".tblItem").empty();
-$.ajax({
-    url:"item",
-    method:"GET",
-    dataType:"json",
-    success:function (resp) {
-        for(const temp of resp){
-            let row = `<tr><td>${temp.id}</td><td>${temp.name}</td><td>${temp.qty}</td><td>${temp.unitPrice}</td></tr>`;
-            $(".tblItem").append(row);
+    $.ajax({
+        url: "item",
+        method: "GET",
+        dataType: "json",
+        success: function (resp) {
+            for (const temp of resp) {
+                let row = `<tr><td>${temp.id}</td><td>${temp.name}</td><td>${temp.qty}</td><td>${temp.unitPrice}</td></tr>`;
+                $(".tblItem").append(row);
+            }
         }
-    }
-})
+    });
+
+
 }
+$("#btnCustomerDelete").click(function () {
+    var data = $("#inId").val();
+
+    $.ajax({
+        url: "customer?customerId="+data,
+        method: "DELETE",
+        success: function (resp) {
+            loadAllCustomer();
+        }
+    });
+
+
+})
+
+function  bindMove() {
+    $(".tblCustomer>tr").off();
+   $(".tblCustomer>tr").click(function () {
+
+       $("#inId").val( $(this).children().eq(0).text());
+       $("#inName").val( $(this).children().eq(1).text());
+       $("#inAddress").val( $(this).children().eq(2).text());
+       $("#inSalary").val( $(this).children().eq(3).text());
+   });
+}
+
+$("#btnCustomerUpdate").click(function () {
+
+    let data = $("#customer").serialize();
+
+    $.ajax({
+        url:"customer?"+data,
+        method:"PUT",
+
+        success:function (resp) {
+            loadAllCustomer();
+        }
+    })
+})
+
 </script>
 
 </body>
