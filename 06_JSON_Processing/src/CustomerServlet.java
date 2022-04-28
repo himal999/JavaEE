@@ -11,6 +11,9 @@ import java.sql.*;
 
 @WebServlet(urlPatterns = "/customer")
 public class CustomerServlet extends HttpServlet {
+    String data;
+    String message;
+    String status;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -30,8 +33,17 @@ public class CustomerServlet extends HttpServlet {
                 customer.add("salary",rst.getString(4));
                 customerArray.add(customer.build());
             }
-
+            JsonObjectBuilder respJson = Json.createObjectBuilder();
             PrintWriter writer = resp.getWriter();
+            message = "Done";
+            status = "200";
+            respJson.add("data",customerArray.build());
+            respJson.add("message",message);
+            respJson.add("status",status);
+            writer.print(respJson.build());
+
+
+
             writer.print(customerArray.build());
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -48,6 +60,8 @@ public class CustomerServlet extends HttpServlet {
         String customerAddress = req.getParameter("customerAddress");
         String customerSalary = req.getParameter("customerSalary");
 
+        resp.setContentType("application/json");
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaEE","root","");
@@ -58,16 +72,27 @@ public class CustomerServlet extends HttpServlet {
             pst.setObject(4,customerSalary);
 
 
+            JsonObjectBuilder respJson = Json.createObjectBuilder();
+
 
             PrintWriter writer = resp.getWriter();
-            if(pst.executeUpdate()>0){
-                writer.write("Customer Added Success");
-                return;
-            }else{
-                writer.write("Try Again");
-                return;
-            }
 
+            if(pst.executeUpdate()>0){
+                  data = "";
+                  message = "Added Success !";
+                  status = "200";
+
+            }else{
+                data = "";
+                message = "Try Again !";
+                status = "";
+
+            }
+            respJson.add("data",data);
+            respJson.add("message",message);
+            respJson.add("status",status);
+
+            writer.print(respJson.build());
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -77,18 +102,34 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        resp.setContentType("application/json");
+
         try {
             String customerId = req.getParameter("customerId");
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaEE","root","");
             PreparedStatement pst = con.prepareStatement("DELETE FROM `customer` WHERE id=?");
             pst.setObject(1,customerId);
+
+            JsonObjectBuilder respJson = Json.createObjectBuilder();
+
+
             PrintWriter writer = resp.getWriter();
+
             if(pst.executeUpdate()>0){
-                writer.write("Customer Delete Success");
+                data = "";
+                message = "Delete Success !";
+                status = "200";
             }else{
-                writer.write("Try Again");
+                data = "";
+                message = "Try Again !";
+                status = "";
             }
+            respJson.add("data",data);
+            respJson.add("message",message);
+            respJson.add("status",status);
+
+            writer.print(respJson.build());
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -97,6 +138,8 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        resp.setContentType("application/json");
 
         JsonReader reader = Json.createReader(req.getReader());
 
@@ -122,16 +165,26 @@ public class CustomerServlet extends HttpServlet {
 
 
 
+            JsonObjectBuilder respJson = Json.createObjectBuilder();
+
+
             PrintWriter writer = resp.getWriter();
+
             if(pst.executeUpdate()>0){
-                writer.write("Customer Update Success");
-                return;
+                data = "";
+                message = "Update Success !";
+                status = "200";
             }else{
-                writer.write("Try Again");
-                return;
+                data = "";
+                message = "Try Again !";
+                status = "";
             }
 
+            respJson.add("data",data);
+            respJson.add("message",message);
+            respJson.add("status",status);
 
+            writer.print(respJson.build());
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
