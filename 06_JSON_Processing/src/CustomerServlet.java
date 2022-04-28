@@ -44,7 +44,7 @@ public class CustomerServlet extends HttpServlet {
 
 
 
-            writer.print(customerArray.build());
+      
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
