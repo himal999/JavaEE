@@ -1,7 +1,6 @@
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
+import com.sun.webkit.graphics.WCRectangle;
+
+import javax.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
@@ -18,14 +17,33 @@ public class JSONServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
-        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+
+        //single json
+/*        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
         objectBuilder.add("id","C001");
         objectBuilder.add("name","Nimal");
 
         JsonObject build = objectBuilder.build();
 
         PrintWriter writer = resp.getWriter();
-        writer.print(build);
+        writer.print(build);*/
+
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+        objectBuilder.add("id","C001");
+        objectBuilder.add("name","Nimal");
+
+
+
+        JsonObjectBuilder objectBuilder1 = Json.createObjectBuilder();
+        objectBuilder1.add("id","C002");
+        objectBuilder1.add("name","Kimal");
+        arrayBuilder.add(objectBuilder.build());
+        arrayBuilder.add(objectBuilder1.build());
+
+        PrintWriter writer = resp.getWriter();
+        writer.print(arrayBuilder.build());
+
     }
 
     @Override
