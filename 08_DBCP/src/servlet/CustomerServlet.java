@@ -29,6 +29,7 @@ public class CustomerServlet extends HttpServlet {
             while (rst.next()){
                 System.out.println(rst.getString(1));
             }
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -48,7 +49,7 @@ public class CustomerServlet extends HttpServlet {
             if(resultSet.next()){
                 System.out.println(resultSet.getString(1));
             }
-
+connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

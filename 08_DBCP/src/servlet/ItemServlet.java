@@ -27,6 +27,7 @@ public class ItemServlet extends HttpServlet {
             if(resultSet.next()){
                 System.out.println(resultSet.getString(1));
             }
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
