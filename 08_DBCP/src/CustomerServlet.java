@@ -1,5 +1,6 @@
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +23,8 @@ public class CustomerServlet extends HttpServlet {
         bds.setUrl("jdbc:mysql://localhost:3306/JavaEE");
         bds.setMaxTotal(5);
         bds.setInitialSize(5);
+        ServletContext servletContext = req.getServletContext();
+        servletContext.setAttribute("bds",bds);
 
         Connection connection = null;
         try {
@@ -31,6 +34,26 @@ public class CustomerServlet extends HttpServlet {
             while (rst.next()){
                 System.out.println(rst.getString(1));
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServletContext servletContext = req.getServletContext();
+        BasicDataSource bds = (BasicDataSource) servletContext.getAttribute("bds");
+
+        Connection connection = null;
+        try {
+            connection = bds.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `customer`");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                System.out.println(resultSet.getString(1));
+            }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
