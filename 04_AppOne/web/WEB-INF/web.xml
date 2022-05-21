@@ -5,7 +5,7 @@
          version="4.0">
     <servlet>
         <servlet-name>item</servlet-name>
-        <servlet-class>ItemServlet</servlet-class>
+        <servlet-class>servlet.ItemServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>item</servlet-name>

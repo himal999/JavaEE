@@ -1,3 +1,5 @@
+package servlet;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.servlet.ServletContext;
@@ -16,15 +18,8 @@ import java.sql.SQLException;
 public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        BasicDataSource bds  =  new BasicDataSource();
-        bds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        bds.setUsername("root");
-        bds.setPassword("");
-        bds.setUrl("jdbc:mysql://localhost:3306/JavaEE");
-        bds.setMaxTotal(5);
-        bds.setInitialSize(5);
         ServletContext servletContext = req.getServletContext();
-        servletContext.setAttribute("bds",bds);
+        BasicDataSource bds = (BasicDataSource) servletContext.getAttribute("bds");
 
         Connection connection = null;
         try {
