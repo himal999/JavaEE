@@ -170,6 +170,8 @@ public class CustomerServlet extends HttpServlet {
 
             PrintWriter writer = resp.getWriter();
 
+
+            resp.setStatus(200);
             if(pst.executeUpdate()>0){
                 data = "";
                 message = "Update Success !";
@@ -177,7 +179,7 @@ public class CustomerServlet extends HttpServlet {
             }else{
                 data = "";
                 message = "Try Again !";
-                status = "";
+                status = "400";
             }
 
             respJson.add("data",data);
