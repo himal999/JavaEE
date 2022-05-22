@@ -10,6 +10,8 @@
       <module fileurl="file://$PROJECT_DIR$/06_JSON_Processing/06_JSON_Processing.iml" filepath="$PROJECT_DIR$/06_JSON_Processing/06_JSON_Processing.iml" />
       <module fileurl="file://$PROJECT_DIR$/07_InbuildDBCP/07_InbuildDBCP.iml" filepath="$PROJECT_DIR$/07_InbuildDBCP/07_InbuildDBCP.iml" />
       <module fileurl="file://$PROJECT_DIR$/08_DBCP/08_DBCP.iml" filepath="$PROJECT_DIR$/08_DBCP/08_DBCP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/09_Fillters/09_Fillters.iml" filepath="$PROJECT_DIR$/09_Fillters/09_Fillters.iml" />
+      <module fileurl="file://$PROJECT_DIR$/10_FrontEnd/10_FrontEnd.iml" filepath="$PROJECT_DIR$/10_FrontEnd/10_FrontEnd.iml" />
     </modules>
   </component>
 </project>
