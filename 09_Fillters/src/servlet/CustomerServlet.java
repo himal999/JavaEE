@@ -20,8 +20,8 @@ public class CustomerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
 
-             resp.setContentType("application/json");
-             resp.addHeader("Access-Control-Allow-Origin","*");
+//             resp.setContentType("application/json");
+//             resp.addHeader("Access-Control-Allow-Origin","*");
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaEE","root","");
             PreparedStatement pst = con.prepareStatement("SELECT * FROM `customer`");
@@ -62,8 +62,8 @@ public class CustomerServlet extends HttpServlet {
         String customerAddress = req.getParameter("customerAddress");
         String customerSalary = req.getParameter("customerSalary");
 
-        resp.setContentType("application/json");
-        resp.addHeader("Access-Control-Allow-Origin","*");
+//        resp.setContentType("application/json");
+//        resp.addHeader("Access-Control-Allow-Origin","*");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaEE","root","");
@@ -105,8 +105,8 @@ public class CustomerServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json");
-        resp.addHeader("Access-Control-Allow-Origin","*");
-        resp.addHeader("Access-Control-Allow-Methods","DELETE");
+//        resp.addHeader("Access-Control-Allow-Origin","*");
+//        resp.addHeader("Access-Control-Allow-Methods","DELETE");
         try {
             String customerId = req.getParameter("customerId");
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -145,7 +145,7 @@ public class CustomerServlet extends HttpServlet {
 
 
         resp.setContentType("application/json");
-        resp.addHeader("Access-Control-Allow-Origin","*");
+//        resp.addHeader("Access-Control-Allow-Origin","*");
 
         JsonReader reader = Json.createReader(req.getReader());
 
@@ -198,10 +198,10 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.addHeader("Access-Control-Allow-Origin","*");
-        resp.addHeader("Access-Control-Allow-Methods","DELETE,PUT");
-        resp.addHeader("Access-Control-Allow-Headers","Content-Type");
-    }
+//    @Override
+//    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        resp.addHeader("Access-Control-Allow-Origin","*");
+//        resp.addHeader("Access-Control-Allow-Methods","DELETE,PUT");
+//        resp.addHeader("Access-Control-Allow-Headers","Content-Type");
+//    }
 }
